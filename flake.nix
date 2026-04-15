@@ -19,11 +19,12 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-      pname = "my-shell";
+      pname = "neat-astal-bar";
       entry = "app.ts";
 
       astalPackages = with ags.packages.${system}; [
         io
+        apps
         astal4 # or astal3 for gtk3
         wireplumber
         bluetooth
@@ -34,6 +35,7 @@
         wireplumber
         network
         mpris
+        hyprland
       ];
 
       extraPackages = astalPackages ++ [
@@ -65,6 +67,8 @@
             mkdir -p $out/share
             cp -r * $out/share
 
+            rm -rf $out/share/result
+
             ags bundle ${entry} $out/bin/${pname} -d "SRC='$out/share'"
 
             runHook postInstall
@@ -84,16 +88,22 @@
           shellHook = ''
             rm -rf libs/ags
             rm -rf libs/gnim
-            cp -r ${ags.packages.x86_64-linux.agsFull.outPath}/share/ags/js ./libs/ags
-            cp -r "${ags.packages.x86_64-linux.agsFull.outPath}/share/ags/js/node_modules/gnim" ./libs/gnim
-            chmod -R 744 libs/ags
-            chmod -R 744 libs/gnim
+            cp -r --no-preserve=mode,ownership ${ags.packages.x86_64-linux.agsFull.outPath}/share/ags/js ./libs/ags
+            cp -r --no-preserve=mode,ownership "${ags.packages.x86_64-linux.agsFull.outPath}/share/ags/js/node_modules/gnim" ./libs/gnim
 
             just type-gen
             echo "Astal Environment Initialized"
           '';
 
         };
+      };
+    }
+    // {
+      homeManagerModules = {
+        neat-astal-bar = import ./home-manager.nix {
+          neat-astal-bar-package = self.packages.${system}.default;
+        };
+        default = self.homeManagerModules.neat-astal-bar;
       };
     };
 }
