@@ -1,0 +1,66 @@
+::root {
+  --spacing-extra-small: 2px;
+  --spacing-small: 4px;
+  --spacing-normal: 8px;
+  --spacing-large: 12px;
+  --spacing-extra-large: 24px;
+  --spacing-2xl: 32px;
+  --spacing-3xl: 46px;
+  --spacing-4xl: 64px;
+  --spacing-8xl: 128px;
+
+  --font-sans: 'SF Pro Text', sans-serif;
+  --font-mono: 'Fira Code', mono;
+
+  --font-size-caption: 1rem;
+  --font-size-text: 1.3rem;
+  --font-size-large: 1.6rem;
+  --font-size-sub-title: 2.2rem;
+}
+
+window.Bar {
+  font-family: var(--font-sans);
+  background: var(--bg-color);
+  color: var(--fg-color);
+  font-weight: bold;
+  padding: 0px 0px;
+
+  .bar-start {
+    padding-left: var(--spacing-large);
+  }
+
+  .bar-end {
+    padding-right: var(--spacing-large);
+  }
+  .bar-end > *:not(:last) {
+    margin-right: 0;
+  }
+
+  > centerbox {
+    background: var(--bg-color);
+    margin: 0px;
+  }
+
+  button {
+    margin: 0px;
+  }
+  .hyprland-window {
+  }
+
+  .hyprland-workspace {
+  }
+
+  .hyprland-workspace.active {
+    background: var(--color-gray-300);
+  }
+
+  .battery-info {
+    transform: rotate(90deg);
+  }
+
+  .battery-popover {
+  }
+
+  .date-time {
+  }
+}

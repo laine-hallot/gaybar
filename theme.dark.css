@@ -1,0 +1,8 @@
+::root {
+  --bg-color: var(--color-good-red-950);
+  --fg-color: var(--color-good-red-50);
+  --bg-primary: var(--color-good-red-950);
+  --bg-secondary: var(--color-good-red-50);
+  --text-primary: var(--color-good-red-950);
+  --text-secondary: var(--color-gray-900);
+}
