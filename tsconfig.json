@@ -7,8 +7,7 @@
     "moduleResolution": "Bundler",
     "strict": true,
     "target": "ES2020",
-    "paths": {}
+    "noUncheckedIndexedAccess": true,
   },
   "include": ["app.ts", "env.d.ts", "astal-4.0.d.ts", "./src/"],
-  
 }

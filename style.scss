@@ -25,6 +25,15 @@ window.Bar {
   font-weight: bold;
   padding: 0px 0px;
 
+  dropdown button.toggle {
+    padding: var(--spacing-small) var(--spacing-normal);
+  }
+
+  button {
+    padding: var(--spacing-extra-small) var(--spacing-extra-small);
+    border-radius: 6px;
+  }
+
   .bar-start {
     padding-left: var(--spacing-large);
   }
@@ -32,8 +41,16 @@ window.Bar {
   .bar-end {
     padding-right: var(--spacing-large);
   }
-  .bar-end > *:not(:last) {
-    margin-right: 0;
+  .bar-end > *:not(:last-child) {
+    margin-right: var(--spacing-small);
+  }
+
+  .bar-end .widget.widget-menubutton,
+  .bar-end .widget .widget-menubutton,
+  .bar-end .widget.widget-menubutton > button,
+  .bar-end .widget .widget-menubutton > button {
+    background: var(--bg-color);
+    padding: var(--spacing-extra-small) var(--spacing-extra-small);
   }
 
   > centerbox {
@@ -41,13 +58,14 @@ window.Bar {
     margin: 0px;
   }
 
-  button {
-    margin: 0px;
-  }
   .hyprland-window {
   }
 
   .hyprland-workspace {
+    border-radius: 0px;
+    padding: var(--spacing-small) var(--spacing-normal);
+  }
+  .hyprland-workspace:last-child {
   }
 
   .hyprland-workspace.active {
@@ -62,5 +80,49 @@ window.Bar {
   }
 
   .date-time {
+  }
+
+  .tray > *:not(:last-child) {
+    margin-right: var(--spacing-small);
+  }
+
+  .tray button {
+    background: var(--bg-color);
+    padding: var(--spacing-extra-small) var(--spacing-extra-small);
+  }
+
+  .mpris {
+  }
+  .mpris .mpris-icons image:not(:last-child) {
+    margin-right: var(--spacing-small);
+  }
+  .mpris .mpris-icons image {
+    padding: 0px var(--spacing-extra-small);
+  }
+
+  .mpris-player {
+  }
+
+  .mpris .cover-art-container {
+    border-radius: 8px;
+  }
+
+  .wifi {
+    .wifi-toggle {
+      margin-top: var(--spacing-normal);
+    }
+
+    .wifi-list {
+      margin-top: var(--spacing-normal);
+      button {
+        padding: var(--spacing-small) var(--spacing-normal);
+        margin-bottom: var(--spacing-extra-small);
+        border-radius: 6px;
+      }
+    }
+
+    .network-settings {
+      margin-top: var(--spacing-normal);
+    }
   }
 }

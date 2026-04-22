@@ -26,7 +26,7 @@ export const HyprlandDesktops = () => {
   ]);
 
   return (
-    <box>
+    <box class="widget hyprland-desktops">
       <With value={focused}>
         {(focused) => (
           <box>

@@ -7,10 +7,13 @@ import {
   createBinding,
 } from 'ags';
 import Battery from 'gi://AstalBattery';
+import Gio from 'gi://Gio';
 import AstalPowerProfiles from 'gi://AstalPowerProfiles?version=0.1';
 
+type IconName<T extends string> = `${T}-symbolic`;
+
 const battery = Battery.get_default();
-const batteryIcon = (info: PowerInfo) => {
+const batteryIcon = (info: PowerInfo): IconName<string> => {
   const statusType = (() => {
     if (!info.isPresent) {
       return 'x';
@@ -27,6 +30,7 @@ const batteryIcon = (info: PowerInfo) => {
       return 'empty';
     }
   })();
+  // ex. mynaui-battery-charging-four-symbolic.svg
   return `mynaui-battery-${statusType}-symbolic`;
 };
 
@@ -52,11 +56,24 @@ export const BatteryWidget = () => {
 
   const profiles = powerProfiles.get_profiles();
   return (
-    <box hexpand halign={Gtk.Align.CENTER}>
-      <menubutton $type="center" hexpand halign={Gtk.Align.CENTER}>
+    <box hexpand halign={Gtk.Align.CENTER} class="widget battery">
+      <menubutton
+        $type="center"
+        hexpand
+        halign={Gtk.Align.CENTER}
+        class="widget-menubutton"
+      >
         <With value={info}>
           {(info) => (
-            <image iconName={batteryIcon(info)} cssName="battery-info" />
+            <Gtk.Picture
+              $type="svg"
+              //iconName={batteryIcon(info)}
+              // force icon for for debugging
+              cssName="battery-info"
+              file={Gio.File.new_for_path(
+                `./icons/hicolor/scalable/actions/${batteryIcon(info)}.svg`,
+              )}
+            />
           )}
         </With>
         <popover class="battery-popover">
@@ -86,7 +103,7 @@ export const BatteryWidget = () => {
                   <Gtk.DropDown
                     onNotifySelectedItem={({ selected }) => {
                       powerProfiles.set_active_profile(
-                        profiles[selected].profile,
+                        profiles[selected]!.profile,
                       );
                     }}
                     selected={profiles.findIndex(

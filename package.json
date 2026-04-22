@@ -8,10 +8,11 @@
     "linux"
   ],
   "dependencies": {
+    "@girs/mtk-16": "16.0.0-4.0.0-rc.3",
+    "@girs/mtk-17": "17.0.0-4.0.0-rc.3",
     "ags": "file:libs/ags",
     "gnim": "file:libs/gnim",
-    "react": "^19.2.5",
-    "react-reconciler": "^0.33.0"
+    "match-discriminated-union": "^1.0.2"
   },
   "scripts": {
     "lint": "eslint . --fix",
@@ -19,10 +20,13 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@types/react-reconciler": "^0.33.0",
     "eslint": "^10.2.0",
     "prettier": "^3.8.2",
     "typescript": "^6.0.2",
     "typescript-eslint": "^8.58.1"
+  },
+  "overrides": {
+    "@girs/mtk-16": "$@girs/mtk-16",
+    "@girs/mtk-17": "$@girs/mtk-17"
   }
 }

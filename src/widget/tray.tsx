@@ -15,11 +15,14 @@ export const SystemTray = () => {
     });
   };
   return (
-    <box>
+    <box class="widget tray">
       <For each={items}>
         {(item) => (
           <box>
-            <menubutton $={(self) => init(self, item)}>
+            <menubutton
+              $={(self) => init(self, item)}
+              class="widget-menubutton"
+            >
               <image gicon={createBinding(item, 'gicon')} />
             </menubutton>
           </box>

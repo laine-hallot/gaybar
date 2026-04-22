@@ -3,7 +3,7 @@ dev:
   just dev-app
 
 dev-app: type-gen
-   watchexec -w ./app.ts -w ./@girs -w ./src -r 'ags run app.ts'
+   watchexec -w ./style.scss -w ./app.ts -w ./@girs -w ./src -r 'ags run app.ts'
 
 type-gen:
   #!/usr/bin/env bash

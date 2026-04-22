@@ -34,7 +34,7 @@ export const Audio = () => {
   const [showAllStreams, setShowAllStreams] = createState(false);
 
   return (
-    <box>
+    <box class="widget audio">
       <With value={selectedDevice}>
         {(selectedDevice) => (
           <box>
@@ -42,7 +42,7 @@ export const Audio = () => {
               {(audio) => {
                 const streams = createBinding(audio, 'streams');
                 return (
-                  <menubutton>
+                  <menubutton class="widget-menubutton">
                     <image
                       icon_name={createBinding(
                         audio.defaultSpeaker,

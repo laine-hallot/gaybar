@@ -1,43 +1,72 @@
-import { createBinding } from 'ags';
+import { createBinding, createState, createComputed } from 'ags';
 import AstalMpris from 'gi://AstalMpris';
 import AstalApps from 'gi://AstalApps';
-import { For, Accessor } from 'ags';
+import { With, For, Accessor } from 'ags';
 import { Gtk } from 'ags/gtk4';
+import Pango from 'gi://Pango?version=1.0';
 
 export const Mpris = () => {
   const mpris = AstalMpris.get_default();
   const apps = new AstalApps.Apps();
   const players = createBinding(mpris, 'players');
 
+  const [lol, setLol] = createState<Gtk.Stack | undefined>(undefined);
   return (
-    <menubutton>
-      <box>
-        <For each={players}>
-          {(player) => {
-            const [app] = apps.exact_query(player.entry);
-            return <image visible={!!app.iconName} iconName={app?.iconName} />;
+    <menubutton class="widget mpris widget-menubutton">
+      <box class="mpris-icons">
+        <With value={players}>
+          {(players) => {
+            return players.length > 0 ? (
+              <button>
+                <image iconName="mynaui-play-symbolic" />
+              </button>
+            ) : null;
           }}
-        </For>
+        </With>
       </box>
       <popover>
-        <box spacing={4} orientation={Gtk.Orientation.VERTICAL}>
+        <box spacing={4} orientation={Gtk.Orientation.HORIZONTAL}>
           <For each={players}>
             {(player) => (
-              <box spacing={4} widthRequest={200}>
-                <box overflow={Gtk.Overflow.HIDDEN} css="border-radius: 8px;">
+              <box
+                class="mpris-player"
+                spacing={4}
+                widthRequest={200}
+                overflow={Gtk.Overflow.HIDDEN}
+                orientation={Gtk.Orientation.VERTICAL}
+                halign={Gtk.Align.CENTER}
+              >
+                <box
+                  overflow={Gtk.Overflow.HIDDEN}
+                  halign={Gtk.Align.CENTER}
+                  class="cover-art-container"
+                >
                   <image
-                    pixelSize={64}
+                    pixelSize={128}
                     file={createBinding(player, 'coverArt')}
                   />
                 </box>
                 <box
                   valign={Gtk.Align.CENTER}
                   orientation={Gtk.Orientation.VERTICAL}
+                  overflow={Gtk.Overflow.HIDDEN}
                 >
-                  <label xalign={0} label={createBinding(player, 'title')} />
-                  <label xalign={0} label={createBinding(player, 'artist')} />
+                  <Gtk.Inscription
+                    xalign={0.5}
+                    wrapMode={Pango.WrapMode.WORD}
+                    textOverflow={Gtk.InscriptionOverflow.ELLIPSIZE_END}
+                    text={createBinding(player, 'title')}
+                    tooltipText={createBinding(player, 'title')}
+                  />
+                  <Gtk.Inscription
+                    xalign={0.5}
+                    wrapMode={Pango.WrapMode.WORD}
+                    textOverflow={Gtk.InscriptionOverflow.ELLIPSIZE_END}
+                    text={createBinding(player, 'artist')}
+                    tooltipText={createBinding(player, 'artist')}
+                  />
                 </box>
-                <box hexpand halign={Gtk.Align.END}>
+                <box hexpand halign={Gtk.Align.CENTER}>
                   <button
                     onClicked={() => player.previous()}
                     visible={createBinding(player, 'canGoPrevious')}

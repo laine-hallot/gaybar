@@ -1,8 +1,8 @@
 import { Gtk } from 'ags/gtk4';
 import AstalNetwork from 'gi://AstalNetwork';
 
-import { Accessor, For, createConnection, createBinding, With } from 'ags';
-import { execAsync, createSubprocess, exec } from 'ags/process';
+import { Accessor, For, createBinding, With, createComputed } from 'ags';
+import { execAsync } from 'ags/process';
 
 const astalNetwork = AstalNetwork.get_default();
 import { WifiToggle } from './wifi-toggle';
@@ -40,49 +40,42 @@ export const Wifi = () => {
   const sorted = (arr: Array<AstalNetwork.AccessPoint>) => {
     return arr
       .filter((ap) => !!ap.ssid)
-      .sort((a, b) => b.strength - a.strength);
+      .sort((a, b) => b.strength - a.strength)
+      .slice(0, 16);
   };
 
+  const wifiWired = createComputed(() => [wifi(), wired()] as const);
   return (
-    <box>
-      <With value={wired}>
-        {(wired) => (
-          <box>
-            <With value={wifi}>
-              {(wifi) =>
-                wifi && (
-                  <menubutton>
-                    <image
-                      iconName={networkIcon({
-                        strength: wifi.strength,
-                        charging: wired !== null ? wired.state : false,
-                        isPresent: true,
-                      })}
-                      class="wifi-icon"
-                    />
-                    <popover>
-                      <box orientation={Gtk.Orientation.VERTICAL}>
-                        <WifiToggle />
-                        <box orientation={Gtk.Orientation.VERTICAL}>
-                          <For
-                            each={createBinding(wifi, 'accessPoints')(sorted)}
-                          >
-                            {(ap: AstalNetwork.AccessPoint) => (
-                              <NetworkEntry
-                                ap={ap}
-                                activeAccessPoint={wifi.activeAccessPoint}
-                              />
-                            )}
-                          </For>
-                        </box>
-                        <NetworkSettings />
-                      </box>
-                    </popover>
-                  </menubutton>
-                )
-              }
-            </With>
-          </box>
+    <box class="widget wifi">
+      <With value={wifiWired}>
+        {([wifi, wired]) => (
+          <menubutton class="widget-menubutton">
+            <image
+              iconName={networkIcon({
+                strength: wifi.strength,
+                charging: wired !== null ? wired.state : false,
+                isPresent: true,
+              })}
+              pixelSize={24}
+              class="wifi-icon"
+            />
+            <popover>
+              <box orientation={Gtk.Orientation.VERTICAL}>
+                <WifiToggle />
+                <box orientation={Gtk.Orientation.VERTICAL} class="wifi-list">
+                  <For each={createBinding(wifi, 'accessPoints')(sorted)}>
+                    {(ap: AstalNetwork.AccessPoint) => (
+                      <NetworkEntry
+                        ap={ap}
+                        activeAccessPoint={wifi.activeAccessPoint}
+                      />
+                    )}
+                  </For>
+                </box>
+                <NetworkSettings />
+              </box>
+            </popover>
+          </menubutton>
         )}
       </With>
     </box>
@@ -103,5 +96,9 @@ const NetworkSettings = () => {
     }
   }
 
-  return <button onClicked={openSettings}>Open Settings</button>;
+  return (
+    <button class="network-settings" onClicked={openSettings}>
+      Open Settings
+    </button>
+  );
 };

@@ -45,35 +45,50 @@
     in
     {
       packages.${system} = {
-        default = pkgs.stdenv.mkDerivation {
+        default = pkgs.buildNpmPackage (finalAttrs: {
           name = pname;
+          pname = pname;
           src = ./.;
+
+          nodejs = pkgs.nodejs_24;
 
           nativeBuildInputs = with pkgs; [
             wrapGAppsHook3
             gobject-introspection
             ags.packages.${system}.default
+            nodejs_24
+            jq
           ];
 
           buildInputs = extraPackages ++ [
             pkgs.gjs
-            pkgs.nodejs_24
           ];
+
+          preConfigure = ''
+            cp -r --no-preserve=mode,ownership ${ags.packages.${system}.agsFull}/share/ags/js ./libs/ags
+            cp -r --no-preserve=mode,ownership ${ags.packages.${system}.agsFull}/share/ags/js/node_modules/gnim ./libs/gnim
+
+            jq -r 'del(.devDependencies)' libs/gnim/package.json > libs/gnim/package.json
+          '';
+
+          npmDepsFetcherVersion = 2;
+          npmDepsHash = "sha256-JzjP3UoAyFKWCdi7p/gcDxCgNckGNvFDmwHAPhWDR5Q=";
 
           installPhase = ''
             runHook preInstall
-
-            mkdir -p $out/bin
-            mkdir -p $out/share
-            cp -r * $out/share
-
-            rm -rf $out/share/result
-
-            ags bundle ${entry} $out/bin/${pname} -d "SRC='$out/share'"
-
+            mkdir -p $out/share/${pname}
+            cp -r --no-preserve=mode,ownership . $out/share/${pname}
+            rm -f $out/share/${pname}/result
             runHook postInstall
           '';
-        };
+
+          buildPhase = ''
+            runHook preBuild
+            mkdir -p $out/bin
+            ags bundle ${entry} $out/bin/${pname} -d "SRC='$out/share'"
+            runHook postBuild
+          '';
+        });
       };
 
       devShells.${system} = {
@@ -90,6 +105,8 @@
             rm -rf libs/gnim
             cp -r --no-preserve=mode,ownership ${ags.packages.x86_64-linux.agsFull.outPath}/share/ags/js ./libs/ags
             cp -r --no-preserve=mode,ownership "${ags.packages.x86_64-linux.agsFull.outPath}/share/ags/js/node_modules/gnim" ./libs/gnim
+
+            jq -r 'del(.devDependencies)' libs/gnim/package.json > libs/gnim/package.json
 
             just type-gen
             echo "Astal Environment Initialized"
