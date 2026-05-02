@@ -26,7 +26,7 @@ const batteryIcon = (info: PowerInfo): IconName<string> => {
       if (info.percentage >= 0.9) return 'charging-four';
       if (info.percentage >= 0.7) return 'charging-three';
       if (info.percentage >= 0.5) return 'charging-two';
-      if (info.percentage >= 0.3) return 'charging-one';
+      if (info.percentage >= 0.05) return 'charging-one';
       return 'empty';
     }
   })();
@@ -71,7 +71,7 @@ export const BatteryWidget = () => {
               // force icon for for debugging
               cssName="battery-info"
               file={Gio.File.new_for_path(
-                `./icons/hicolor/scalable/actions/${batteryIcon(info)}.svg`,
+                `/home/laineh/Projects/astal-bar/icons/hicolor/scalable/actions/${batteryIcon(info)}.svg`,
               )}
             />
           )}

@@ -7,35 +7,28 @@ import { execAsync } from 'ags/process';
 const astalNetwork = AstalNetwork.get_default();
 import { WifiToggle } from './wifi-toggle';
 import { NetworkEntry } from './network-entry';
+import Gio from 'gi://Gio?version=2.0';
 
 type NetInfo = {
-  isPresent: boolean;
-  charging: boolean;
+  wired: boolean;
   strength: number;
 };
 
 const networkIcon = (info: NetInfo) => {
-  const statusType = (() => {
-    console.log(info.strength);
-    if (!info.isPresent) {
-      return 'x';
-    }
-    if (info.charging) {
-      return 'charging';
-    } else {
-      if (info.strength >= 90) return '';
-      // even though the battery is not charging the icon names still start with "battery-charging"
-      if (info.strength >= 70) return 'medium';
-      if (info.strength >= 30) return 'low';
-      return 'empty';
-    }
-  })();
-  return `mynaui-wifi-${statusType}-symbolic`;
+  if (info.wired) {
+    return 'mynaui-arrow-up-down-symbolic';
+  } else {
+    if (info.strength >= 90) return 'mynaui-wifi-symbolic';
+    // even though the battery is not charging the icon names still start with "battery-charging"
+    if (info.strength >= 70) return 'mynaui-wifi-medium-symbolic';
+    if (info.strength >= 30) return 'mynaui-wifi-low-symbolic';
+    return 'mynaui-wifi-empty-symbolic';
+  }
 };
 
 export const Wifi = () => {
   const wifi = createBinding(astalNetwork, 'wifi');
-  const wired = createBinding(astalNetwork, 'get_wired');
+  const wired = createBinding(astalNetwork, 'wired');
 
   const sorted = (arr: Array<AstalNetwork.AccessPoint>) => {
     return arr
@@ -50,14 +43,15 @@ export const Wifi = () => {
       <With value={wifiWired}>
         {([wifi, wired]) => (
           <menubutton class="widget-menubutton">
-            <image
-              iconName={networkIcon({
-                strength: wifi.strength,
-                charging: wired !== null ? wired.state : false,
-                isPresent: true,
-              })}
-              pixelSize={24}
+            <Gtk.Picture
+              $type="svg"
               class="wifi-icon"
+              file={Gio.File.new_for_path(
+                `/home/laineh/Projects/astal-bar/icons/hicolor/scalable/actions/${networkIcon({
+                  strength: wifi.strength,
+                  wired: false,
+                })}.svg`,
+              )}
             />
             <popover>
               <box orientation={Gtk.Orientation.VERTICAL}>

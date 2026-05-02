@@ -12,7 +12,7 @@ export const Mpris = () => {
 
   const [lol, setLol] = createState<Gtk.Stack | undefined>(undefined);
   return (
-    <menubutton class="widget mpris widget-menubutton">
+    <menubutton class="widget mpris widget-menubutton" widthRequest={0}>
       <box class="mpris-icons">
         <With value={players}>
           {(players) => {
