@@ -42,7 +42,7 @@ export const Audio = () => {
               {(audio) => {
                 const streams = createBinding(audio, 'streams');
                 return (
-                  <menubutton class="widget-menubutton">
+                  <menubutton class="widget-menubutton audio">
                     <image
                       icon_name={createBinding(
                         audio.defaultSpeaker,
@@ -53,7 +53,7 @@ export const Audio = () => {
                       <box orientation={Gtk.Orientation.VERTICAL}>
                         <DeviceSelect wp={wp} />
                         <box orientation={Gtk.Orientation.VERTICAL}>
-                          <box orientation={Gtk.Orientation.HORIZONTAL}>
+                          <box orientation={Gtk.Orientation.HORIZONTAL} class="volume-levels">
                             <label label="Volume" />
                             <slider
                               widthRequest={260}
@@ -129,7 +129,7 @@ const DeviceSelect = ({ wp }: { wp: Wp.Wp }) => {
   };
 
   return (
-    <box orientation={Gtk.Orientation.VERTICAL}>
+    <box orientation={Gtk.Orientation.VERTICAL} class="audio-device-select">
       <label label="Device" />
       <revealer
         transitionType={Gtk.RevealerTransitionType.SLIDE_DOWN}
@@ -146,9 +146,8 @@ const DeviceSelect = ({ wp }: { wp: Wp.Wp }) => {
               $constructor={() =>
                 Gtk.DropDown.new_from_strings(
                   devices
-                    .filter(
-                      (device) =>
-                        device.deviceType === Wp.DeviceType.AUDIO_DEVICE,
+                    .filter((device) =>
+                      device.deviceType === Wp.DeviceType.AUDIO_DEVICE,
                     )
                     .map((device) => device.description),
                 )

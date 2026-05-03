@@ -69,7 +69,7 @@ export const BatteryWidget = () => {
               $type="svg"
               //iconName={batteryIcon(info)}
               // force icon for for debugging
-              cssName="battery-info"
+              class="battery-icon"
               file={Gio.File.new_for_path(
                 `/home/laineh/Projects/astal-bar/icons/hicolor/scalable/actions/${batteryIcon(info)}.svg`,
               )}
@@ -77,30 +77,14 @@ export const BatteryWidget = () => {
           )}
         </With>
         <popover class="battery-popover">
-          <box orientation={Gtk.Orientation.VERTICAL}>
-            <label cssName="battery-info" label="Battery Info" />
-            <With value={info}>
-              {(info) => (
-                <box
-                  orientation={Gtk.Orientation.VERTICAL}
-                  halign={Gtk.Align.END}
-                >
-                  <label
-                    cssName="battery-info"
-                    label={`${(info.percentage * 100).toFixed(0)}%`}
-                  />
-                  <label
-                    cssName="battery-info"
-                    label={info.charging ? 'Charging' : 'Discharging'}
-                  />
-                </box>
-              )}
-            </With>
-            <box $type="end">
-              <label cssName="battery-info" label="Profile" />
+          <box orientation={Gtk.Orientation.VERTICAL} class="battery-popover-content">
+            <centerbox class="power-profile-container">
+              <label class="power-profile-label" label="Profile" $type="start" />
               <With value={activeProfile}>
                 {(activeProfile) => (
                   <Gtk.DropDown
+                    $type='end'
+                    class="power-profile-dropdown"
                     onNotifySelectedItem={({ selected }) => {
                       powerProfiles.set_active_profile(
                         profiles[selected]!.profile,
@@ -117,7 +101,27 @@ export const BatteryWidget = () => {
                   />
                 )}
               </With>
-            </box>
+            </centerbox>
+            <With value={info}>
+              {(info) => (
+                <centerbox
+                  class="battery-state"
+                  orientation={Gtk.Orientation.HORIZONTAL}
+                  halign={Gtk.Align.FILL}
+                >
+                  <label
+                    $type="start"
+                    class="battery-state-label"
+                    label={info.charging ? 'Charging' : 'Discharging'}
+                  />
+                  <label
+                    $type="end"
+                    class="value"
+                    label={`${(info.percentage * 100).toFixed(0)}%`}
+                  />
+                </centerbox>
+              )}
+            </With>
           </box>
         </popover>
       </menubutton>

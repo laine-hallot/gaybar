@@ -31,7 +31,7 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
         </box>
         <box $type="end" halign={Gtk.Align.END} class="bar-end">
           <SystemTray />
-          <Mpris />
+          { /* <Mpris /> */}
           <BatteryWidget />
           <Wifi />
           <Audio />

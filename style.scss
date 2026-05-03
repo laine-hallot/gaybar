@@ -22,10 +22,9 @@ window.Bar {
   font-family: var(--font-sans);
   background: var(--bg-color);
   color: var(--fg-color);
-  font-weight: bold;
   padding: 0px 0px;
   margin: var(--spacing-small);
-  border: 1px solid var(--color-pink-300);
+  font-weight: 400;
 
   dropdown button.toggle {
     padding: var(--spacing-small) var(--spacing-normal);
@@ -68,6 +67,7 @@ window.Bar {
       border-radius: 0px;
       padding: var(--spacing-small) var(--spacing-normal);
       background-color: var(--color-pink-200);
+      font-weight: 400;
     }
     .hyprland-workspace:last-child {
     }
@@ -77,11 +77,42 @@ window.Bar {
     }
   }
 
+  .widget.battery {
+    .battery-popover {
+      .battery-popover-content {
+        padding: var(--spacing-small) var(--spacing-normal);
 
-  .battery-info {
-  }
+        & > * {
+          margin-top: var(--spacing-normal);
+        }
+        & > *:first-child {
+          margin-top: 0px;
+        }
 
-  .battery-popover {
+        .battery-state {
+          .battery-state-label {
+            font-weight: 500;
+          }
+
+          & > * {
+          }
+          & > *:first-child {
+            margin-left: 0px;
+          }
+
+        }
+
+        .power-profile-container {
+
+          .power-profile-label {
+            font-weight: 400;
+          }
+          .power-profile-dropdown {
+          }
+        }
+
+      }
+    }
   }
 
   .date-time {
@@ -114,19 +145,45 @@ window.Bar {
 
   .wifi {
     .wifi-toggle {
+      padding: var(--spacing-small) var(--spacing-small);
       margin-top: var(--spacing-normal);
+
+      label {
+        margin-left: var(--spacing-large);
+      }
     }
 
     .wifi-list {
       margin-top: var(--spacing-normal);
-      button {
+
+      .network-entry {
         padding: var(--spacing-small) var(--spacing-normal);
-        margin-bottom: var(--spacing-extra-small);
-        border-radius: 6px;
+        border-radius: 0px;
+        background-color: transparent;
+        &:hover {
+          background-color: var(--bg-color);
+        }
+        .network-ssid {
+          font-weight: 400;
+        }
+      }
+    }
+    .wifi-list.active {
+      .network-entry {
+        .network-ssid {
+          font-weight: 700;
+        }
       }
     }
 
-    .network-settings {
+    button.network-settings {
+      font-weight: 400;
+      margin-top: var(--spacing-normal);
+    }
+  }
+
+  .widget-menubutton.audio {
+    .volume-levels {
       margin-top: var(--spacing-normal);
     }
   }
