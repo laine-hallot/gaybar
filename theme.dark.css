@@ -6,3 +6,9 @@
   --text-primary: var(--color-good-red-950);
   --text-secondary: var(--color-gray-900);
 }
+
+
+.battery-icon,
+.wifi-icon {
+  filter: invert(100%);
+}
