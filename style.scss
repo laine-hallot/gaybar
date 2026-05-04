@@ -59,17 +59,20 @@ window.Bar {
 
   .bar-end {
     padding-right: var(--spacing-large);
-  }
-  .bar-end > *:not(:last-child) {
-    margin-right: var(--spacing-small);
-  }
 
-  .bar-end .widget.widget-menubutton,
-  .bar-end .widget .widget-menubutton,
-  .bar-end .widget.widget-menubutton > button,
-  .bar-end .widget .widget-menubutton > button {
-    background: var(--bg-color);
-    padding: var(--spacing-extra-small) var(--spacing-extra-small);
+    .widget.widget-menubutton > button,
+    .widget .widget-menubutton > button {
+      background: var(--bg-color);
+      padding: var(--spacing-extra-small) var(--spacing-small);
+      border-radius: 0;
+
+      &:checked {
+        background-color: var(--bg-secondary);
+        image {
+          color: var(--text-inverse);
+        }
+      }
+    }
   }
 
   popover {

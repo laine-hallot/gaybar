@@ -4,6 +4,7 @@
   --fg-color: var(--color-good-red-50);
   --bg-secondary: var(--color-balance-red-800);
   --text-primary: var(--color-good-red-50);
+  --text-inverse: var(--color-balance-black);
   --text-secondary: var(--color-gray-900);
   --accent: var(--color-balance-light-pink);
 }
@@ -11,4 +12,9 @@
 .battery-icon,
 .wifi-icon {
   filter: invert(100%);
+}
+
+.bar-end .widget .widget-menubutton>button:checked .battery-icon,
+.bar-end .widget .widget-menubutton>button:checked .wifi-icon {
+  filter: invert(0%);
 }
