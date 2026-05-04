@@ -19,7 +19,7 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-      pname = "neat-astal-bar";
+      pname = "gaybar";
       entry = "app.ts";
 
       astalPackages = with ags.packages.${system}; [
@@ -117,10 +117,10 @@
     }
     // {
       homeManagerModules = {
-        neat-astal-bar = import ./home-manager.nix {
-          neat-astal-bar-package = self.packages.${system}.default;
+        gaybar = import ./home-manager.nix {
+          gaybar-package = self.packages.${system}.default;
         };
-        default = self.homeManagerModules.neat-astal-bar;
+        default = self.homeManagerModules.gaybar;
       };
     };
 }

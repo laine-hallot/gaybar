@@ -1,4 +1,4 @@
-{ neat-astal-bar-package }:
+{ gaybar-package }:
 {
   config,
   pkgs,
@@ -6,12 +6,12 @@
   ...
 }:
 let
-  cfg = config.programs.neat-astal-bar;
+  cfg = config.programs.gaybar;
 in
 {
-  options.programs.neat-astal-bar = with lib.types; {
-    enable = lib.mkEnableOption "neat-astal-bar";
-    #package = lib.mkPackageOption pkgs "neat-astal-bar" { };
+  options.programs.gaybar = with lib.types; {
+    enable = lib.mkEnableOption "gaybar";
+    #package = lib.mkPackageOption pkgs "gaybar" { };
 
     systemd = {
       enable = lib.mkEnableOption "Systemd integration";
@@ -22,7 +22,7 @@ in
         defaultText = literalExpression "config.wayland.systemd.target";
         example = "sway-session.target";
         description = ''
-          The systemd target that will automatically start the neat-astal-bar service.
+          The systemd target that will automatically start the gaybar service.
 
           When setting this value to `"sway-session.target"`,
           make sure to also enable {option}`wayland.windowManager.sway.systemd.enable`,
@@ -34,7 +34,7 @@ in
   config = lib.mkIf cfg.enable (
     lib.mkMerge [
       (lib.mkIf cfg.systemd.enable {
-        systemd.user.services.neat-astal-bar = {
+        systemd.user.services.gaybar = {
           Unit = {
             Description = "Astal status bar";
             Documentation = "";
@@ -49,7 +49,7 @@ in
           Service = {
             Environment = "";
             ExecReload = "${pkgs.coreutils}/bin/kill -SIGUSR2 $MAINPID";
-            ExecStart = "${neat-astal-bar-package}/bin/neat-astal-bar";
+            ExecStart = "${gaybar-package}/bin/gaybar";
             KillMode = "mixed";
             Restart = "on-failure";
           };
