@@ -223,7 +223,34 @@ window.Bar {
 
   .widget-menubutton.audio {
     .volume-levels {
-      margin-top: var(--spacing-normal);
+    }
+
+    .audio-device-select {
+      .device-select-label {
+        padding: var(--spacing-small);
+        padding-left: var(--spacing-2xl);
+      }
+    }
+    .streams-container,
+    .volume-container {
+      padding: var(--spacing-small);
+      padding-left: var(--spacing-2xl);
+    }
+    .streams-container {
+      .streams-label {
+        margin-bottom: var(--spacing-large);
+      }
+
+      .streams-list {
+
+        & > *:not(:last-child) {
+          margin-bottom: var(--spacing-small);
+        }
+
+        .audio-stream {
+
+        }
+      }
     }
   }
 }

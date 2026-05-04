@@ -6,7 +6,7 @@ import { HyprlandWindow } from './widget/hyprland-window';
 import { SystemTray } from './widget/tray';
 import { DateTime } from './widget/date-time';
 import { Wifi } from './widget/wifi/wifi';
-import { Audio } from './widget/audio';
+import { Audio } from './widget/audio/audio';
 import { Mpris } from './widget/mpris';
 
 export default function Bar(gdkmonitor: Gdk.Monitor) {
