@@ -1,5 +1,6 @@
 ::root {
   --bg-color: var(--color-pink-100);
+  --surface: var(--color-pink-400);
   --fg-color: var(--color-good-red-950);
   --bg-primary: var(--color-good-red-50);
   --bg-secondary: var(--color-good-red-400);

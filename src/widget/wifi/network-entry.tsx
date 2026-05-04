@@ -34,7 +34,7 @@ export const NetworkEntry = ({
 
   return (
     <button
-      class={`network-entry ${activeAccessPoint === ap ? 'active' : ''}`}
+      class={`network-entry option-list-item ${activeAccessPoint === ap ? 'active' : ''}`}
       onClicked={() => {
         if (activeAccessPoint === ap) {
           disconnect();
@@ -44,12 +44,16 @@ export const NetworkEntry = ({
       }}
     >
       <box spacing={4}>
-        <image iconName={createBinding(ap, 'iconName')} />
-        <label label={createBinding(ap, 'ssid')} class="network-ssid" />
-        <image
-          iconName="object-select-symbolic"
-          visible={activeAccessPoint === ap}
-        />
+        <box widthRequest={16}>
+          <image
+            iconName="object-select-symbolic"
+            visible={activeAccessPoint === ap}
+          />
+        </box>
+        <box widthRequest={200}>
+          <label label={createBinding(ap, 'ssid')} class="network-ssid option-label" $type="start" />
+          <image iconName={createBinding(ap, 'iconName')} $type="end" />
+        </box>
       </box>
     </button>
   );

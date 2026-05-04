@@ -21,7 +21,7 @@ export const SystemTray = () => {
           <box>
             <menubutton
               $={(self) => init(self, item)}
-              class="widget-menubutton"
+              class="widget-menubutton tray-button"
             >
               <image gicon={createBinding(item, 'gicon')} />
             </menubutton>

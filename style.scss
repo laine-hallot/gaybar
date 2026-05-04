@@ -54,6 +54,60 @@ window.Bar {
     padding: var(--spacing-extra-small) var(--spacing-extra-small);
   }
 
+  popover {
+   contents {
+      background-color: var(--surface);
+    }
+  }
+
+  .tray-button popover,
+  .styled-popover {
+    & > * {
+      padding: 0px;
+      padding-top: var(--spacing-small);
+      border-radius: 6px;
+      background-color: var(--surface);
+    }
+
+    separator {
+      margin-left: var(--spacing-small);
+      margin-right: var(--spacing-small);
+    }
+  }
+
+  .tray-button popover {
+    contents > scrolledwindow > viewport > stack > box {
+      padding: 0px;
+    }
+    modelbutton {
+      background-color: transparent;
+      padding: 0 var(--spacing-2xl);
+      border-radius: 0;
+
+      &:hover {
+        background: var(--bg-secondary);
+      }
+    }
+  }
+
+  .option-list {
+    .option-list-item {
+      border-radius: 0px;
+      background-color: transparent;
+      padding: var(--spacing-small) var(--spacing-normal);
+
+      &:hover {
+        background-color: var(--bg-secondary);
+      }
+      .option-label {
+        font-weight: 400;
+      }
+    }
+
+    .option-list-item.active {
+    }
+  }
+
   > centerbox {
     background: var(--bg-color);
     margin: 0px;
@@ -80,22 +134,21 @@ window.Bar {
   .widget.battery {
     .battery-popover {
       .battery-popover-content {
-        padding: var(--spacing-small) var(--spacing-normal);
 
         & > * {
-          margin-top: var(--spacing-normal);
+          margin-bottom: var(--spacing-small);
         }
-        & > *:first-child {
-          margin-top: 0px;
+
+        & > *:last-child {
+          margin-bottom: 0px;
         }
 
         .battery-state {
+          padding: var(--spacing-small) var(--spacing-2xl);
           .battery-state-label {
-            font-weight: 500;
+            font-weight: 400;
           }
 
-          & > * {
-          }
           & > *:first-child {
             margin-left: 0px;
           }
@@ -103,9 +156,9 @@ window.Bar {
         }
 
         .power-profile-container {
-
           .power-profile-label {
-            font-weight: 400;
+            font-weight: 600;
+            padding: var(--spacing-small) var(--spacing-2xl);
           }
           .power-profile-dropdown {
           }
@@ -143,10 +196,10 @@ window.Bar {
     border-radius: 8px;
   }
 
-  .wifi {
+  .widget.wifi {
     .wifi-toggle {
-      padding: var(--spacing-small) var(--spacing-small);
-      margin-top: var(--spacing-normal);
+      padding: var(--spacing-small) var(--spacing-extra-large);
+      margin-bottom: var(--spacing-small);
 
       label {
         margin-left: var(--spacing-large);
@@ -154,31 +207,17 @@ window.Bar {
     }
 
     .wifi-list {
-      margin-top: var(--spacing-normal);
-
-      .network-entry {
-        padding: var(--spacing-small) var(--spacing-normal);
-        border-radius: 0px;
-        background-color: transparent;
-        &:hover {
-          background-color: var(--bg-color);
-        }
-        .network-ssid {
-          font-weight: 400;
-        }
-      }
-    }
-    .wifi-list.active {
-      .network-entry {
-        .network-ssid {
-          font-weight: 700;
-        }
-      }
+      margin-bottom: var(--spacing-small);
     }
 
-    button.network-settings {
+    .network-settings button {
       font-weight: 400;
-      margin-top: var(--spacing-normal);
+      background-color: transparent;
+      padding: var(--spacing-small) var(--spacing-extra-large);
+
+      &:hover {
+        background-color: var(--bg-secondary);
+      }
     }
   }
 

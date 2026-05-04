@@ -5,6 +5,8 @@ import {
   createConnection,
   createComputed,
   createBinding,
+  For,
+  createState,
 } from 'ags';
 import Battery from 'gi://AstalBattery';
 import Gio from 'gi://Gio';
@@ -76,52 +78,60 @@ export const BatteryWidget = () => {
             />
           )}
         </With>
-        <popover class="battery-popover">
-          <box orientation={Gtk.Orientation.VERTICAL} class="battery-popover-content">
-            <centerbox class="power-profile-container">
-              <label class="power-profile-label" label="Profile" $type="start" />
-              <With value={activeProfile}>
-                {(activeProfile) => (
-                  <Gtk.DropDown
-                    $type='end'
-                    class="power-profile-dropdown"
-                    onNotifySelectedItem={({ selected }) => {
-                      powerProfiles.set_active_profile(
-                        profiles[selected]!.profile,
-                      );
-                    }}
-                    selected={profiles.findIndex(
-                      (profile) => profile.profile === activeProfile,
-                    )}
-                    $constructor={() =>
-                      Gtk.DropDown.new_from_strings(
-                        profiles.map((profile) => profile.profile),
-                      )
-                    }
-                  />
+        <popover class="battery-popover styled-popover" hasArrow={false}>
+          <box orientation={Gtk.Orientation.VERTICAL} class="battery-popover-content" widthRequest={230}>
+            <box>
+              <With value={info}>
+                {(info) => (
+                  <centerbox
+                    class="battery-state"
+                    orientation={Gtk.Orientation.HORIZONTAL}
+                    halign={Gtk.Align.FILL}
+                  >
+                    <label
+                      $type="start"
+                      class="battery-state-label"
+                      label={info.charging ? 'Charging' : 'Discharging'}
+                    />
+                    <label
+                      $type="end"
+                      class="value"
+                      label={`${(info.percentage * 100).toFixed(0)}%`}
+                    />
+                  </centerbox>
                 )}
               </With>
-            </centerbox>
-            <With value={info}>
-              {(info) => (
-                <centerbox
-                  class="battery-state"
-                  orientation={Gtk.Orientation.HORIZONTAL}
-                  halign={Gtk.Align.FILL}
-                >
-                  <label
-                    $type="start"
-                    class="battery-state-label"
-                    label={info.charging ? 'Charging' : 'Discharging'}
-                  />
-                  <label
-                    $type="end"
-                    class="value"
-                    label={`${(info.percentage * 100).toFixed(0)}%`}
-                  />
-                </centerbox>
-              )}
-            </With>
+            </box>
+            <Gtk.Separator />
+            <box class="power-profile-container option-list" orientation={Gtk.Orientation.VERTICAL}>
+              <label class="power-profile-label" label="Profile" halign={Gtk.Align.START} />
+              <With value={activeProfile}>
+                {(activeProfile) => (
+                  <box orientation={Gtk.Orientation.VERTICAL}>
+                    {profiles.map((profile, index) =>
+                      <button
+                        class={`option-list-item ${profile.profile === activeProfile ? 'active' : ''}`}
+                        onClicked={() => {
+                          powerProfiles.set_active_profile(
+                            profiles[index]!.profile,
+                          );
+                        }}
+                      >
+                        <box spacing={8} class="list-option-content">
+                          <box widthRequest={16}>
+                            <image
+                              iconName="object-select-symbolic"
+                              visible={profile.profile === activeProfile}
+                            />
+                          </box>
+                          <label label={profile.profile} class="option-label" />
+                        </box>
+                      </button>
+                    )}
+                  </box>
+                )}
+              </With>
+            </box>
           </box>
         </popover>
       </menubutton>

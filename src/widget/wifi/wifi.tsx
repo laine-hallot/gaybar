@@ -30,9 +30,34 @@ export const Wifi = () => {
   const wifi = createBinding(astalNetwork, 'wifi');
   const wired = createBinding(astalNetwork, 'wired');
 
-  const sorted = (arr: Array<AstalNetwork.AccessPoint>) => {
-    return arr
+  const createSorter = (connectedAp: AstalNetwork.AccessPoint) => (arr: Array<AstalNetwork.AccessPoint>) => {
+    return Object.values(arr
       .filter((ap) => !!ap.ssid)
+      .reduce((apList, ap) => {
+        const ssid = ap.get_ssid();
+        if (ssid === null) {
+          return apList;
+        }
+        const existing = apList[ssid];
+        if (existing === undefined) {
+          return {
+            ...apList,
+            ...({ [ssid]: ap })
+          }
+        } else if (ap.strength > existing.strength) {
+          return {
+            ...apList,
+            ...({ [ssid]: ap })
+          }
+        } else if (ap.ssid === connectedAp.ssid) {
+          return {
+            ...apList,
+            ...({ [ssid]: ap })
+          }
+        }
+        return apList;
+
+      }, {} as Record<string, AstalNetwork.AccessPoint>))
       .sort((a, b) => b.strength - a.strength)
       .slice(0, 16);
   };
@@ -42,7 +67,7 @@ export const Wifi = () => {
     <box class="widget wifi">
       <With value={wifiWired}>
         {([wifi, wired]) => (
-          <menubutton class="widget-menubutton">
+          <menubutton class="widget-menubutton wifi">
             <Gtk.Picture
               $type="svg"
               class="wifi-icon"
@@ -53,11 +78,12 @@ export const Wifi = () => {
                 })}.svg`,
               )}
             />
-            <popover>
+            <popover class="styled-popover" hasArrow={false} widthRequest={340}>
               <box orientation={Gtk.Orientation.VERTICAL}>
                 <WifiToggle />
-                <box orientation={Gtk.Orientation.VERTICAL} class="wifi-list">
-                  <For each={createBinding(wifi, 'accessPoints')(sorted)}>
+                <Gtk.Separator />
+                <box orientation={Gtk.Orientation.VERTICAL} class="wifi-list option-list">
+                  <For each={createBinding(wifi, 'accessPoints')(createSorter(wifi.activeAccessPoint))}>
                     {(ap: AstalNetwork.AccessPoint) => (
                       <NetworkEntry
                         ap={ap}
@@ -66,6 +92,7 @@ export const Wifi = () => {
                     )}
                   </For>
                 </box>
+                <Gtk.Separator />
                 <NetworkSettings />
               </box>
             </popover>
@@ -91,8 +118,10 @@ const NetworkSettings = () => {
   }
 
   return (
-    <button class="network-settings" onClicked={openSettings}>
-      Open Settings
-    </button>
+    <box class="network-settings" hexpand={true} orientation={Gtk.Orientation.VERTICAL}>
+      <button onClicked={openSettings} halign={Gtk.Align.BASELINE_FILL} hexpand={true}>
+        <label label={"Open Settings"} halign={Gtk.Align.START} />
+      </button>
+    </box>
   );
 };

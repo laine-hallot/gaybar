@@ -1,8 +1,9 @@
 ::root {
-  --bg-color: var(--color-good-red-950);
+  --bg-color: var(--color-good-red-500);
+  --surface: var(--color-good-red-700);
   --fg-color: var(--color-good-red-50);
   --bg-primary: var(--color-good-red-950);
-  --bg-secondary: var(--color-good-red-50);
+  --bg-secondary: var(--color-good-red-800);
   --text-primary: var(--color-good-red-950);
   --text-secondary: var(--color-gray-900);
 }

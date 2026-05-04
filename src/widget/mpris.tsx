@@ -24,7 +24,7 @@ export const Mpris = () => {
           }}
         </With>
       </box>
-      <popover>
+      <popover hasArrow={false} class="styled-popover">
         <box spacing={4} orientation={Gtk.Orientation.HORIZONTAL}>
           <For each={players}>
             {(player) => (

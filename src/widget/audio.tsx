@@ -49,7 +49,7 @@ export const Audio = () => {
                         'volumeIcon',
                       )}
                     />
-                    <popover>
+                    <popover hasArrow={false} class="styled-popover">
                       <box orientation={Gtk.Orientation.VERTICAL}>
                         <DeviceSelect wp={wp} />
                         <box orientation={Gtk.Orientation.VERTICAL}>
@@ -115,9 +115,10 @@ export const Audio = () => {
               }}
             </With>
           </box>
-        )}
-      </With>
-    </box>
+        )
+        }
+      </With >
+    </box >
   );
 };
 
