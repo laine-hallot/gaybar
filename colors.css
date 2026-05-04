@@ -1,10 +1,18 @@
 ::root {
+  --color-balance-red-500: #b05072;
+  --color-balance-red-600: #a55973;
+  --color-balance-red-800: #8a3a55;
+  --color-balance-r1: #9a4d65;
+  --color-balance-r2-a: #823650;
+  --color-balance-r2-b: #833751;
+  --color-balance-black: #1d1414;
+  --color-balance-light-pink: #f4e5ef;
+  --color-balance-gray-300: #dedce2;
   --color-good-red-50: #f7fbfc;
   --color-good-red-400: #ca9fb4;
   --color-good-red-700: #964662;
   --color-good-red-800: #844056;
   --color-good-red-900: #492a32;
-  --color-good-red-950: #1d1414;
   --color-pink-50: #f7f2f3;
   --color-pink-100: #ede3e5;
   --color-pink-200: #ddc6cb;

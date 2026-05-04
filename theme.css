@@ -1,9 +1,9 @@
 ::root {
-  --bg-color: var(--color-pink-100);
-  --surface: var(--color-pink-400);
-  --fg-color: var(--color-good-red-950);
-  --bg-primary: var(--color-good-red-50);
+  --bg-color: var(--color-good-red-50);
+  --surface: var(--color-balance-light-pink);
+  --fg-color: var(--color-balance-black);
   --bg-secondary: var(--color-good-red-400);
-  --text-primary: var(--color-good-red-950);
+  --text-primary: var(--color-balance-black);
   --text-secondary: var(--color-gray-900);
+  --accent: var(--color-balance-r1);
 }

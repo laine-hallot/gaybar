@@ -35,6 +35,24 @@ window.Bar {
     border-radius: 6px;
   }
 
+  label, button, image {
+    color: var(--fg-color);
+  }
+
+  scale {
+    trough {
+      background-color: var(--bg-secondary);
+
+      highlight {
+        background-color: var(--accent);
+      }
+
+      slider {
+        background-color: white;
+      }
+    }
+  }
+
   .bar-start {
     padding-left: var(--spacing-large);
   }
@@ -120,15 +138,20 @@ window.Bar {
     .hyprland-workspace {
       border-radius: 0px;
       padding: var(--spacing-small) var(--spacing-normal);
-      background-color: var(--color-pink-200);
+      background-color: var(--surface);
       font-weight: 400;
+
+      &.active {
+        background: var(--bg-secondary);
+      }
+
+      &:hover {
+        background: var(--bg-secondary);
+      }
     }
     .hyprland-workspace:last-child {
     }
 
-    .hyprland-workspace.active {
-      background: var(--color-pink-400);
-    }
   }
 
   .widget.battery {
@@ -214,6 +237,7 @@ window.Bar {
       font-weight: 400;
       background-color: transparent;
       padding: var(--spacing-small) var(--spacing-extra-large);
+      border-radius: 0;
 
       &:hover {
         background-color: var(--bg-secondary);

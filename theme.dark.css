@@ -1,13 +1,12 @@
 ::root {
-  --bg-color: var(--color-good-red-500);
-  --surface: var(--color-good-red-700);
+  --bg-color: var(--color-balance-r2-b);
+  --surface: var(--color-balance-r1);
   --fg-color: var(--color-good-red-50);
-  --bg-primary: var(--color-good-red-950);
-  --bg-secondary: var(--color-good-red-800);
-  --text-primary: var(--color-good-red-950);
+  --bg-secondary: var(--color-balance-red-800);
+  --text-primary: var(--color-good-red-50);
   --text-secondary: var(--color-gray-900);
+  --accent: var(--color-balance-light-pink);
 }
-
 
 .battery-icon,
 .wifi-icon {
