@@ -74,7 +74,8 @@ If you really don't want to use `nix` for some reason then you'll need to instal
 - probably some other stuff
 
 Because of how `ags` and `gnim` are packaged you need to download the files for those and add them to `./node_modules/` yourself. `package.json` has `ags` and `gnim` as `file:` dependencies pointed at `./libs/ags` and `./libs/gnim` respectively. Regardless of how you actually get the files as long as your `./libs/` looks something like this things should work out:
-![battery](https://raw.githubusercontent.com/laine-hallot/gaybar/refs/heads/main/docs/public/battery.png)
+
+![libs](https://raw.githubusercontent.com/laine-hallot/gaybar/refs/heads/main/docs/public/libs-example.png)
 
 #### Building
 1. Correct some broken deps inside `gnim` `jq -r 'del(.devDependencies)' libs/gnim/package.json > libs/gnim/package.json`
