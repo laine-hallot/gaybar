@@ -1,5 +1,5 @@
 # Gay Bar
-This is a gay bar
+Gtk4 status bar made with Astal.
 
 ![example](https://raw.githubusercontent.com/laine-hallot/gaybar/refs/heads/main/docs/public/bar-example.png)
 
