@@ -39,6 +39,10 @@ window.Bar {
     color: var(--fg-color);
   }
 
+  switch:checked {
+    background-color: var(--bg-secondary);
+  }
+
   scale {
     trough {
       background-color: var(--bg-secondary);
@@ -195,10 +199,7 @@ window.Bar {
   }
 
   .date-time {
-  }
-
-  .tray > *:not(:last-child) {
-    margin-right: var(--spacing-small);
+    margin-left: var(--spacing-small);
   }
 
   .tray button {
@@ -234,6 +235,10 @@ window.Bar {
 
     .wifi-list {
       margin-bottom: var(--spacing-small);
+
+      .network-ssid {
+        margin-left: var(--spacing-small);
+      }
     }
 
     .network-settings button {

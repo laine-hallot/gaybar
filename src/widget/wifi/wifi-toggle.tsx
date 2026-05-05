@@ -3,41 +3,42 @@ import AstalNetwork from 'gi://AstalNetwork';
 
 import {
   Accessor,
-  For,
-  createConnection,
   createBinding,
-  With,
   createState,
+  With,
 } from 'ags';
-import { execAsync, createSubprocess, exec } from 'ags/process';
+import { execAsync } from 'ags/process';
 
-const astalNetwork = AstalNetwork.get_default();
-
-export const WifiToggle = () => {
-  const iface = createBinding(astalNetwork.wifi.device, 'interface');
+export const WifiToggle = ({ wifiEnabled }: { wifiEnabled: boolean }) => {
+  const [loading, setLoading] = createState(false);
 
   const handleWifiToggle = async (toggle: Gtk.Switch) => {
-    await execAsync(`nmcli radio ${iface} ${toggle.active ? 'on' : 'off'}`);
+    setLoading(true);
+    await execAsync(`nmcli radio wifi ${toggle.active ? 'on' : 'off'}`).catch((err) => { console.log("Error changing Wifi setting:"); console.error(err) });
+    setLoading(false);
   };
 
   return (
     <box class="wifi-toggle">
-      <switch
-        actionName={'wifi-toggle'}
-        canTarget={true}
-        sensitive={true}
-        $constructor={(toggle) => {
-          const newToggle = new Gtk.Switch({
-            ...toggle,
-            active: true,
-          });
-          return newToggle;
-        }}
-        onActivate={(toggle) => {
-          handleWifiToggle(toggle);
-        }}
-      />
-      <label label="Wifi" />
+      <box>
+        <switch
+          actionName={'wifi-toggle'}
+          canTarget={true}
+          sensitive={true}
+          $constructor={(toggle) => {
+            const newToggle = new Gtk.Switch({
+              ...toggle,
+              active: wifiEnabled,
+            });
+            return newToggle;
+          }}
+          onNotifyActive={(toggle) => {
+            handleWifiToggle(toggle);
+          }}
+        />
+        <label label="Wifi" />
+        <Gtk.Spinner spinning={loading} />
+      </box>
     </box>
   );
 };

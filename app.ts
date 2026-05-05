@@ -19,7 +19,7 @@ watchModeChanged((mode) => {
       colors,
       match({ mode }, 'mode', {
         'prefer-light': () => theme,
-        'prefer-dark': () => darkTheme,
+        'prefer-dark': () => theme,
       }),
       style,
     ].join('\n'),
@@ -32,7 +32,7 @@ app.start({
     colors,
     match({ colorScheme: initialColorScheme }, 'colorScheme', {
       'prefer-light': () => theme,
-      'prefer-dark': () => darkTheme,
+      'prefer-dark': () => theme,
     }),
     style,
   ].join('\n'),
